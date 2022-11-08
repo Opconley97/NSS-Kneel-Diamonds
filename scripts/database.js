@@ -33,7 +33,8 @@ const database = {
             styleId: 3,
             timestamp: 1614659931693
         }
-    ]
+    ],
+    orderBuilder: {},
 }
 
 export const getMetals = () => {
@@ -50,4 +51,32 @@ export const getStyles = () => {
 
 export const getOrders = () => {
     return database.customOrders.map(order => ({...order}))
+}
+
+export const setMetal = (id) => {
+    database.orderBuilder.metalId = id
+}
+
+export const setSize = (id) => {
+    database.orderBuilder.sizeId = id
+}
+
+export const setStyle = (id) => {
+    database.orderBuilder.styleId = id
+}
+
+export const addCustomOrder = () => {
+    // Copys the current state of the user choices
+    const newOrder = {...database.orderBuilder}
+    // Adds a new primary key to the object
+    const lastIndex = database.customOrders.length - 1
+    newOrder.id = database.customOrders[lastIndex].id + 1
+    // Adds a timestamp to the order
+    newOrder.timestamp = Date.now()
+    // Adds the new order object to the custom orders state
+    database.customOrders.push(newOrder)
+    // Resets the temporary state for user choices
+    database.orderBuilder = {}
+    // Broadcast a notification that a permanent state has changed
+    document.dispatchEvent(new CustomEvent("stateChanged"))
 }
