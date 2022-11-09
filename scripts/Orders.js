@@ -9,35 +9,35 @@ const order = getOrders();
 actually looking at the metalId property, and whenever I edit the code to make
 it do that, it doesn't use the user inputs, just the original array */
 
-/*const foundMetal = metals.find(
-    (metal) => {
-        return metal.id === order.metalId
-    }
-
-)
-
-const foundSize = sizes.find(
-    (size) => {
-        return size.id === order.sizeId   
-    }
-)
-
-const foundStyle = styles.find(
-    (style) => {
-        return style.id === order.styleId
-    }
-)
-
-const totalCost = foundMetal.price + foundSize.price + foundStyle.price
-
-const costString = totalCost.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD"
-})*/
 
 const buildOrderListItem = (order) => {
+    const foundMetal = metals.find(
+        (metal) => {
+            return metal.id === order.metalId
+        }
+    
+    )
+    
+    const foundSize = sizes.find(
+        (size) => {
+            return size.id === order.sizeId   
+        }
+    )
+    
+    const foundStyle = styles.find(
+        (style) => {
+            return style.id === order.styleId
+        }
+    )
+    
+    const totalCost = foundMetal.price + foundSize.price + foundStyle.price
+    
+    const costString = totalCost.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD"
+    })
     return `<li>
-        Order #${order.id} cost ${order.timestamp/*Should be costString*/}
+        Order #${order.id} cost ${costString/*Should be costString*/}
     </li>`
 }
 
@@ -56,5 +56,5 @@ export const Orders = () => {
     html += "</ul>"
 
     return html
-}
+}   
 
